@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>自然语言处理知识点测验</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3B82F6',
+            secondary: '#10B981',
+            accent: '#F59E0B',
+            danger: '#EF4444',
+            dark: '#1F2937',
+            light: '#F9FAFB'
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.4s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-light to-blue-50 min-h-screen font-inter">
+  <div class="container mx-auto px-4 py-6 max-w-3xl">
+    <!-- 标题区域 -->
+    <header class="text-center mb-6">
+      <h1 class="text-[clamp(1.5rem,3vw,2.2rem)] font-bold text-primary mb-2">自然语言处理知识点测验</h1>
+      <p class="text-gray-600 text-sm">测试你的NLP基础知识掌握程度</p>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="bg-white rounded-2xl shadow-xl p-5 mb-8">
+      <!-- 测验进度 -->
+      <div class="flex justify-between items-center mb-6">
+        <div class="text-sm text-gray-500">
+          <span id="current-question">1</span> / <span id="total-questions">5</span>
+        </div>
+        <div class="w-1/2 bg-gray-200 rounded-full h-2">
+          <div id="progress-bar" class="bg-primary h-2 rounded-full" style="width: 20%"></div>
+        </div>
+        <div class="text-sm font-medium text-primary">
+          <i class="fa fa-clock-o mr-1"></i> <span id="timer">00:00</span>
+        </div>
+      </div>
+
+      <!-- 问题容器 -->
+      <div id="quiz-container" class="space-y-5">
+        <div id="question-card" class="animate-fade-in">
+          <h3 id="question-text" class="text-lg font-semibold text-dark mb-4">自然语言处理中，词嵌入(Word Embedding)的主要作用是什么？</h3>
+          <div id="options-container" class="space-y-2"></div>
+        </div>
+
+        <div id="feedback" class="hidden"></div>
+
+        <!-- 导航按钮 -->
+        <div class="flex justify-between mt-6">
+          <button id="prev-btn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors opacity-50 cursor-not-allowed">
+            <i class="fa fa-arrow-left mr-2"></i>上一题
+          </button>
+          <button id="next-btn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+            下一题<i class="fa fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 结果页面 -->
+      <div id="results-container" class="hidden text-center py-8 animate-fade-in">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 text-secondary mb-4">
+          <i class="fa fa-check-circle text-3xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-dark mb-2">测验完成！</h2>
+        <p class="text-gray-600 mb-6">你的成绩已记录</p>
+
+        <div class="bg-gray-50 rounded-xl p-6 max-w-md mx-auto mb-6">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-gray-600">正确题数</span>
+            <span id="correct-count" class="font-bold text-dark">0</span>
+          </div>
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-gray-600">总题数</span>
+            <span id="total-count" class="font-bold text-dark">5</span>
+          </div>
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-gray-600">得分</span>
+            <span id="score" class="font-bold text-dark">0</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">用时</span>
+            <span id="final-time" class="font-bold text-dark">00:00</span>
+          </div>
+        </div>
+
+        <!-- 每题反馈 -->
+        <div id="question-feedback" class="mt-6 space-y-4"></div>
+
+        <button id="restart-btn" class="px-6 py-3 bg-primary text-white rounded-lg shadow hover:bg-primary/90 transition-all">
+          <i class="fa fa-refresh mr-2"></i>再次测验
+        </button>
+      </div>
+    </main>
+
+    <!-- 知识点卡片 -->
+    <div class="bg-white rounded-2xl shadow-xl p-5 mb-8 animate-fade-in" style="animation-delay: 0.2s">
+      <h2 class="text-xl font-bold text-dark mb-4">相关知识点</h2>
+      <div class="space-y-4">
+        <div class="p-4 bg-blue-50 rounded-lg">
+          <h3 class="font-semibold text-primary mb-2">词嵌入(Word Embedding)</h3>
+          <p class="text-gray-600 text-sm">词嵌入是将词语映射到低维连续向量空间的技术，能够捕捉词语之间的语义和语法关系，如Word2Vec、GloVe等。</p>
+        </div>
+        <div class="p-4 bg-green-50 rounded-lg">
+          <h3 class="font-semibold text-secondary mb-2">注意力机制(Attention)</h3>
+          <p class="text-gray-600 text-sm">注意力机制使模型能够动态地关注输入序列的不同部分，是Transformer架构的核心组件。</p>
+        </div>
+        <div class="p-4 bg-yellow-50 rounded-lg">
+          <h3 class="font-semibold text-accent mb-2">预训练语言模型</h3>
+          <p class="text-gray-600 text-sm">预训练语言模型如BERT、GPT等通过大规模无监督学习获得通用语言表示，然后可通过微调应用于特定任务。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="text-center text-gray-500 text-xs">
+      <p>© 2025 NLP知识点测验</p>
+    </footer>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "自然语言处理中，词嵌入(Word Embedding)的主要作用是什么？",
+        options: [
+          "将词语转换为数值向量表示", 
+          "删除文本中的停用词", 
+          "进行词性标注", 
+          "计算句子相似度"
+        ],
+        answer: "A",
+        explanation: "词嵌入的主要作用是将词语映射到低维连续向量空间，捕捉词语之间的语义和语法关系。"
+      },
+      {
+        question: "Transformer模型中的自注意力机制(Self-Attention)主要解决了什么问题？",
+        options: [
+          "长距离依赖问题", 
+          "词向量维度问题", 
+          "数据稀疏问题", 
+          "计算效率问题"
+        ],
+        answer: "A",
+        explanation: "自注意力机制使模型能够直接建模序列中任意两个位置之间的关系，有效解决了RNN处理长距离依赖的困难。"
+      },
+      {
+        question: "BERT模型采用的是哪种预训练任务？",
+        options: [
+          "掩码语言模型和下一句预测", 
+          "语言模型和序列标注", 
+          "机器翻译和文本摘要", 
+          "情感分析和命名实体识别"
+        ],
+        answer: "A",
+        explanation: "BERT使用掩码语言模型(Masked Language Model)和下一句预测(Next Sentence Prediction)两个任务进行预训练。"
+      },
+      {
+        question: "以下哪种技术不属于自然语言处理中的文本表示方法？",
+        options: [
+          "TF-IDF", 
+          "Word2Vec", 
+          "ResNet", 
+          "BERT"
+        ],
+        answer: "C",
+        explanation: "ResNet是计算机视觉中的深度卷积神经网络，不属于自然语言处理的文本表示方法。"
+      },
+      {
+        question: "GPT模型与BERT模型的主要区别是什么？",
+        options: [
+          "GPT是单向语言模型，BERT是双向语言模型", 
+          "GPT使用CNN，BERT使用RNN", 
+          "GPT用于分类任务，BERT用于生成任务", 
+          "GPT需要微调，BERT可以直接使用"
+        ],
+        answer: "A",
+        explanation: "GPT采用单向的自回归语言模型，而BERT采用双向的Transformer编码器结构，这是两者的主要架构差异。"
+      }
+    ];
+
+    let gameState = {
+      currentQuestion: 0,
+      answers: Array(questions.length).fill(null),
+      startTime: null,
+      timerInterval: null
+    };
+
+    function initGame() {
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('options-container').addEventListener('click', (e) => {
+          const option = e.target.closest('.option');
+          if (option) selectAnswer(option);
+        });
+
+        document.getElementById('prev-btn').addEventListener('click', goToPreviousQuestion);
+        document.getElementById('next-btn').addEventListener('click', goToNextQuestion);
+        document.getElementById('restart-btn').addEventListener('click', restartGame);
+
+        renderQuestion();
+        startTimer();
+      });
+    }
+
+    function renderQuestion() {
+      const question = questions[gameState.currentQuestion];
+      const questionText = document.getElementById('question-text');
+      const optionsContainer = document.getElementById('options-container');
+
+      questionText.textContent = question.question;
+
+      // 渲染选项
+      optionsContainer.innerHTML = '';
+      question.options.forEach((option, index) => {
+        const isAnswered = gameState.answers[gameState.currentQuestion] === String.fromCharCode(65 + index);
+        const selectedClass = isAnswered ? 'bg-blue-50 border-primary' : '';
+        const circleClass = isAnswered ? 'bg-primary text-white border-primary' : '';
+
+        const optionEl = document.createElement('div');
+        optionEl.className = `option p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors ${selectedClass}`;
+        optionEl.setAttribute('data-answer', String.fromCharCode(65 + index));
+        optionEl.setAttribute('role', 'button');
+        optionEl.setAttribute('aria-label', `选项${String.fromCharCode(65 + index)}`);
+        optionEl.innerHTML = `
+          <span class="inline-block w-6 h-6 rounded-full border border-gray-300 text-center mr-2 ${circleClass}">
+            ${String.fromCharCode(65 + index)}
+          </span>
+          <span>${option}</span>
+        `;
+        optionsContainer.appendChild(optionEl);
+      });
+
+      // 更新进度条和导航按钮
+      const progress = ((gameState.currentQuestion + 1) / questions.length) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      document.getElementById('current-question').textContent = gameState.currentQuestion + 1;
+      updateNavigationButtons();
+
+      // 隐藏反馈
+      document.getElementById('feedback').classList.add('hidden');
+    }
+
+    function selectAnswer(option) {
+      const answer = option.getAttribute('data-answer');
+      gameState.answers[gameState.currentQuestion] = answer;
+
+      document.querySelectorAll('.option').forEach(opt => {
+        opt.classList.remove('bg-blue-50', 'border-primary');
+        opt.querySelector('span:first-child').classList.remove('bg-primary', 'text-white', 'border-primary');
+      });
+
+      option.classList.add('bg-blue-50', 'border-primary');
+      option.querySelector('span:first-child').classList.add('bg-primary', 'text-white', 'border-primary');
+
+      if (gameState.currentQuestion === questions.length - 1) {
+        showFeedback(answer);
+      }
+    }
+
+    function showFeedback(answer) {
+      const feedbackEl = document.getElementById('feedback');
+      const question = questions[gameState.currentQuestion];
+
+      if (answer === question.answer) {
+        feedbackEl.className = 'p-4 rounded-lg mt-4 animate-fade-in bg-green-50 border-l-4 border-green-400';
+        feedbackEl.innerHTML = `
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <i class="fa fa-check-circle text-green-500 text-xl"></i>
+            </div>
+            <div class="ml-3">
+              <p class="text-green-800 font-medium">回答正确！</p>
+              <p class="text-green-700 text-sm mt-1">${question.explanation}</p>
+            </div>
+          </div>
+        `;
+      } else {
+        feedbackEl.className = 'p-4 rounded-lg mt-4 animate-fade-in bg-red-50 border-l-4 border-red-400';
+        feedbackEl.innerHTML = `
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <i class="fa fa-times-circle text-red-500 text-xl"></i>
+            </div>
+            <div class="ml-3">
+              <p class="text-red-800 font-medium">回答错误</p>
+              <p class="text-red-700 text-sm mt-1">正确答案是：${question.answer}. ${question.explanation}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      feedbackEl.classList.remove('hidden');
+    }
+
+    function updateNavigationButtons() {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+
+      if (gameState.currentQuestion === 0) {
+        prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        prevBtn.disabled = true;
+      } else {
+        prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        prevBtn.disabled = false;
+      }
+
+      if (gameState.currentQuestion === questions.length - 1) {
+        nextBtn.innerHTML = '<i class="fa fa-check mr-2"></i>完成测验';
+      } else {
+        nextBtn.innerHTML = '下一题<i class="fa fa-arrow-right ml-2"></i>';
+      }
+    }
+
+    function goToPreviousQuestion() {
+      if (gameState.currentQuestion > 0) {
+        gameState.currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function goToNextQuestion() {
+      if (gameState.currentQuestion < questions.length - 1) {
+        gameState.currentQuestion++;
+        renderQuestion();
+      } else {
+        submitQuiz();
+      }
+    }
+
+    function submitQuiz() {
+      clearInterval(gameState.timerInterval);
+      const correctAnswers = gameState.answers.filter((ans, i) => ans === questions[i].answer).length;
+      const totalTime = document.getElementById('timer').textContent;
+
+      document.getElementById('correct-count').textContent = correctAnswers;
+      document.getElementById('score').textContent = `${correctAnswers * 20}分`;
+      document.getElementById('final-time').textContent = totalTime;
+
+      // 显示每题反馈
+      const feedbackContainer = document.getElementById('question-feedback');
+      feedbackContainer.innerHTML = '';
+
+      questions.forEach((q, index) => {
+        const userAnswer = gameState.answers[index];
+        const isCorrect = userAnswer === q.answer;
+        const feedbackEl = document.createElement('div');
+        feedbackEl.className = 'p-4 border-l-4 rounded-r-lg shadow-sm bg-opacity-50';
+
+        if (isCorrect) {
+          feedbackEl.classList.add('bg-green-100', 'border-green-500');
+          feedbackEl.innerHTML = `
+            <div class="flex items-center">
+              <i class="fa fa-check-circle text-green-500 text-xl mr-3"></i>
+              <div>
+                <strong>第 ${index + 1} 题：</strong> 回答正确！<br/>
+                <small>${q.explanation}</small>
+              </div>
+            </div>`;
+        } else {
+          feedbackEl.classList.add('bg-red-100', 'border-red-500');
+          feedbackEl.innerHTML = `
+            <div class="flex items-center">
+              <i class="fa fa-times-circle text-red-500 text-xl mr-3"></i>
+              <div>
+                <strong>第 ${index + 1} 题：</strong> 回答错误<br/>
+                <small>你的答案：${userAnswer || '未作答'}，正确答案：${q.answer}. ${q.explanation}</small>
+              </div>
+            </div>`;
+        }
+
+        feedbackContainer.appendChild(feedbackEl);
+      });
+
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('results-container').classList.remove('hidden');
+    }
+
+    function restartGame() {
+      clearInterval(gameState.timerInterval);
+      gameState = {
+        currentQuestion: 0,
+        answers: Array(questions.length).fill(null),
+        startTime: new Date(),
+        timerInterval: null
+      };
+
+      document.getElementById('results-container').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+
+      renderQuestion();
+      startTimer();
+    }
+
+    function startTimer() {
+      gameState.startTime = new Date();
+
+      gameState.timerInterval = setInterval(() => {
+        const now = new Date();
+        const elapsedSeconds = Math.floor((now - gameState.startTime) / 1000);
+        const minutes = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
+        const seconds = String(elapsedSeconds % 60).padStart(2, '0');
+        document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+      }, 1000);
+    }
+
+    // 启动游戏
+    initGame();
+  </script>
+</body>
+</html>
