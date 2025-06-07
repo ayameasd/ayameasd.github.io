@@ -282,45 +282,6 @@
 
       option.classList.add('bg-blue-50', 'border-primary');
       option.querySelector('span:first-child').classList.add('bg-primary', 'text-white', 'border-primary');
-
-      if (gameState.currentQuestion === questions.length - 1) {
-        showFeedback(answer);
-      }
-    }
-
-    function showFeedback(answer) {
-      const feedbackEl = document.getElementById('feedback');
-      const question = questions[gameState.currentQuestion];
-
-      if (answer === question.answer) {
-        feedbackEl.className = 'p-4 rounded-lg mt-4 animate-fade-in bg-green-50 border-l-4 border-green-400';
-        feedbackEl.innerHTML = `
-          <div class="flex">
-            <div class="flex-shrink-0">
-              <i class="fa fa-check-circle text-green-500 text-xl"></i>
-            </div>
-            <div class="ml-3">
-              <p class="text-green-800 font-medium">回答正确！</p>
-              <p class="text-green-700 text-sm mt-1">${question.explanation}</p>
-            </div>
-          </div>
-        `;
-      } else {
-        feedbackEl.className = 'p-4 rounded-lg mt-4 animate-fade-in bg-red-50 border-l-4 border-red-400';
-        feedbackEl.innerHTML = `
-          <div class="flex">
-            <div class="flex-shrink-0">
-              <i class="fa fa-times-circle text-red-500 text-xl"></i>
-            </div>
-            <div class="ml-3">
-              <p class="text-red-800 font-medium">回答错误</p>
-              <p class="text-red-700 text-sm mt-1">正确答案是：${question.answer}. ${question.explanation}</p>
-            </div>
-          </div>
-        `;
-      }
-
-      feedbackEl.classList.remove('hidden');
     }
 
     function updateNavigationButtons() {
