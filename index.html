@@ -49,15 +49,15 @@
 </head>
 <body class="bg-gradient-to-br from-light to-blue-50 min-h-screen font-inter">
   <div class="container mx-auto px-4 py-6 max-w-3xl">
-    <!-- 标题区域 -->
+ 
     <header class="text-center mb-6">
       <h1 class="text-[clamp(1.5rem,3vw,2.2rem)] font-bold text-primary mb-2">计算机基础与自然语言处理测验</h1>
       <p class="text-gray-600 text-sm">测试计算机基础与NLP知识掌握程度</p>
     </header>
 
-    <!-- 主要内容区域 -->
+ 
     <main class="bg-white rounded-2xl shadow-xl p-5 mb-8">
-      <!-- 测验进度 -->
+   
       <div class="flex justify-between items-center mb-6">
         <div class="text-sm text-gray-500">
           <span id="current-question">1</span> / <span id="total-questions">10</span>
@@ -70,7 +70,7 @@
         </div>
       </div>
 
-      <!-- 问题容器 -->
+    
       <div id="quiz-container" class="space-y-5">
         <div id="question-card" class="animate-fade-in">
           <h3 id="question-text" class="text-lg font-semibold text-dark mb-4">计算机底层存储数据的基本单位是什么？</h3>
@@ -79,7 +79,7 @@
 
         <div id="feedback" class="hidden"></div>
 
-        <!-- 导航按钮 -->
+      
         <div class="flex justify-between mt-6">
           <button id="prev-btn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors opacity-50 cursor-not-allowed">
             <i class="fa fa-arrow-left mr-2"></i>上一题
@@ -90,7 +90,7 @@
         </div>
       </div>
 
-      <!-- 结果页面 -->
+   
       <div id="results-container" class="hidden text-center py-8 animate-fade-in">
         <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 text-secondary mb-4">
           <i class="fa fa-check-circle text-3xl"></i>
@@ -117,7 +117,7 @@
           </div>
         </div>
 
-        <!-- 每题反馈 -->
+       
         <div id="question-feedback" class="mt-6 space-y-4"></div>
 
         <button id="restart-btn" class="px-6 py-3 bg-primary text-white rounded-lg shadow hover:bg-primary/90 transition-all">
@@ -126,7 +126,7 @@
       </div>
     </main>
 
-    <!-- 知识点卡片 -->
+   
     <div class="bg-white rounded-2xl shadow-xl p-5 mb-8 animate-fade-in" style="animation-delay: 0.2s">
       <h2 class="text-xl font-bold text-dark mb-4">知识拓展资源</h2>
       <div class="space-y-4">
@@ -153,7 +153,7 @@
       </div>
     </div>
 
-    <!-- 页脚 -->
+ 
     <footer class="text-center text-gray-500 text-xs">
       <p>© 2025 计算机基础与NLP测验</p>
     </footer>
@@ -304,7 +304,7 @@
 
       questionText.textContent = question.question;
 
-      // 渲染选项
+   
       optionsContainer.innerHTML = '';
       question.options.forEach((option, index) => {
         const isAnswered = gameState.answers[gameState.currentQuestion] === String.fromCharCode(65 + index);
@@ -325,13 +325,13 @@
         optionsContainer.appendChild(optionEl);
       });
 
-      // 更新进度条和导航按钮
+  
       const progress = ((gameState.currentQuestion + 1) / questions.length) * 100;
       document.getElementById('progress-bar').style.width = `${progress}%`;
       document.getElementById('current-question').textContent = gameState.currentQuestion + 1;
       updateNavigationButtons();
 
-      // 隐藏反馈
+     
       document.getElementById('feedback').classList.add('hidden');
     }
 
@@ -393,7 +393,7 @@
       document.getElementById('score').textContent = `${correctAnswers * 10}分`;
       document.getElementById('final-time').textContent = totalTime;
 
-      // 显示每题反馈
+      
       const feedbackContainer = document.getElementById('question-feedback');
       feedbackContainer.innerHTML = '';
 
