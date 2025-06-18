@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>计算机基础与自然语言处理测验</title>
   <script src="https://cdn.tailwindcss.com"></script>
- 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script>
     tailwind.config = {
@@ -15,29 +14,21 @@
             primary: '#3B82F6',
             secondary: '#10B981',
             accent: '#F59E0B',
-            danger: '#EF4444',
             dark: '#1F2937',
-            light: '#F9FAFB'
+            light: '#F9FAFB',
           },
           fontFamily: {
             inter: ['Inter', 'sans-serif']
+          },
+          boxShadow: {
+            card: '0 8px 20px rgba(0, 0, 0, 0.08)'
           }
         }
       }
-    };
+    }
   </script>
   <style type="text/tailwindcss">
     @layer utilities {
-      .content-auto {
-        content-visibility: auto;
-      }
-      .card-hover {
-        transition: all 0.3s ease;
-      }
-      .card-hover:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      }
       .animate-fade-in {
         animation: fadeIn 0.4s ease-in-out;
       }
@@ -45,52 +36,44 @@
         from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
       }
+      .card-hover {
+        @apply transition-transform duration-300 hover:scale-105 hover:shadow-2xl;
+      }
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-light to-blue-50 min-h-screen font-inter">
-  <div class="container mx-auto px-4 py-6 max-w-3xl">
-   
-    <header class="text-center mb-6">
-      <h1 class="text-[clamp(1.5rem,3vw,2.2rem)] font-bold text-primary mb-2">计算机基础与自然语言处理测验</h1>
-      <p class="text-gray-600 text-sm">测试计算机基础与NLP知识掌握程度</p>
+<body class="bg-gradient-to-br from-light to-blue-50 min-h-screen font-inter text-gray-800">
+  <div class="container mx-auto px-4 py-8 max-w-3xl">
+    <header class="text-center mb-8">
+      <h1 class="text-3xl md:text-4xl font-extrabold text-primary tracking-wide mb-2">计算机基础与自然语言处理测验</h1>
+      <p class="text-gray-500 text-base">掌握知识，挑战自我</p>
     </header>
 
-  
-    <main class="bg-white rounded-2xl shadow-xl p-5 mb-8">
-  
-      <div class="flex justify-between items-center mb-6">
-        <div class="text-sm text-gray-500">
-          <span id="current-question">1</span> / <span id="total-questions">10</span>
+    <main class="bg-white rounded-3xl shadow-card p-6 mb-10 animate-fade-in">
+      <div class="flex justify-between items-center mb-6 text-sm text-gray-500">
+        <span><span id="current-question">1</span> / <span id="total-questions">10</span></span>
+        <div class="w-1/2 bg-gray-200 rounded-full h-2 overflow-hidden">
+          <div id="progress-bar" class="bg-primary h-2 transition-all duration-300" style="width: 10%"></div>
         </div>
-        <div class="w-1/2 bg-gray-200 rounded-full h-2">
-          <div id="progress-bar" class="bg-primary h-2 rounded-full" style="width: 10%"></div>
-        </div>
-        <div class="text-sm font-medium text-primary">
-          <i class="fa-regular fa-clock mr-1"></i> <span id="timer">00:00</span>
+        <div class="text-primary font-semibold flex items-center">
+          <i class="fa-regular fa-clock mr-1"></i><span id="timer">00:00</span>
         </div>
       </div>
 
-      
-      <div id="quiz-container" class="space-y-5">
+      <div id="quiz-container">
         <div id="question-card" class="animate-fade-in">
-          <h3 id="question-text" class="text-lg font-semibold text-dark mb-4">计算机底层存储数据的基本单位是什么？</h3>
-          <div id="options-container" class="space-y-2"></div>
+          <h2 id="question-text" class="text-lg font-semibold text-dark mb-4">题目加载中...</h2>
+          <div id="options-container" class="space-y-3"></div>
         </div>
-
-        <div id="feedback" class="hidden"></div>
-
-        
         <div class="flex justify-between mt-6">
-          <button id="prev-btn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors opacity-50 cursor-not-allowed">
+          <button id="prev-btn" disabled class="px-4 py-2 bg-white border border-gray-300 text-gray-600 rounded-xl shadow hover:bg-gray-100 transition-all cursor-not-allowed opacity-50">
             <i class="fa-solid fa-arrow-left mr-2"></i>上一题
           </button>
-          <button id="next-btn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+          <button id="next-btn" class="px-4 py-2 bg-primary text-white rounded-xl shadow hover:bg-primary/90 transition-all">
             下一题<i class="fa-solid fa-arrow-right ml-2"></i>
           </button>
         </div>
       </div>
-
 
       <div id="results-container" class="hidden text-center py-8 animate-fade-in">
         <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 text-secondary mb-4">
@@ -98,369 +81,248 @@
         </div>
         <h2 class="text-2xl font-bold text-dark mb-2">测验完成！</h2>
         <p class="text-gray-600 mb-6">你的成绩已记录</p>
-
-        <div class="bg-gray-50 rounded-xl p-6 max-w-md mx-auto mb-6">
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-gray-600">正确题数</span>
-            <span id="correct-count" class="font-bold text-dark">0</span>
+        <div class="bg-gray-50 rounded-xl p-6 max-w-md mx-auto mb-6 shadow">
+          <div class="flex justify-between mb-3">
+            <span>正确题数</span><span id="correct-count">0</span>
           </div>
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-gray-600">总题数</span>
-            <span id="total-count" class="font-bold text-dark">10</span>
+          <div class="flex justify-between mb-3">
+            <span>总题数</span><span id="total-count">10</span>
           </div>
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-gray-600">得分</span>
-            <span id="score" class="font-bold text-dark">0</span>
+          <div class="flex justify-between mb-3">
+            <span>得分</span><span id="score">0</span>
           </div>
-          <div class="flex justify-between items-center">
-            <span class="text-gray-600">用时</span>
-            <span id="final-time" class="font-bold text-dark">00:00</span>
+          <div class="flex justify-between">
+            <span>用时</span><span id="final-time">00:00</span>
           </div>
         </div>
-
-    
-        <div id="question-feedback" class="mt-6 space-y-4"></div>
-
-        <button id="restart-btn" class="px-6 py-3 bg-primary text-white rounded-lg shadow hover:bg-primary/90 transition-all">
+        <div id="question-feedback" class="space-y-4"></div>
+        <button id="restart-btn" class="mt-6 px-6 py-3 bg-gradient-to-r from-primary to-blue-600 text-white rounded-xl shadow hover:scale-105 transition-all">
           <i class="fa-solid fa-rotate-right mr-2"></i>再次测验
         </button>
       </div>
     </main>
 
-   
-    <div class="bg-white rounded-2xl shadow-xl p-5 mb-8 animate-fade-in" style="animation-delay: 0.2s">
-      <h2 class="text-xl font-bold text-dark mb-4">知识拓展资源</h2>
-      <div class="space-y-4">
-        <a href="https://cloud.tencent.com/developer/article/1847253" target="_blank" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-          <h3 class="font-semibold text-primary mb-2"><i class="fa-solid fa-book mr-2"></i>自然语言处理简介</h3>
-          <p class="text-gray-600 text-sm">了解自然语言处理的基本概念和应用领域</p>
+    <section class="bg-white rounded-3xl shadow-card p-6 mb-10 animate-fade-in">
+      <h2 class="text-xl font-bold mb-4 text-dark">📘 知识拓展资源</h2>
+      <div class="grid gap-4">
+        <a href="https://cloud.tencent.com/developer/article/1847253" target="_blank" class="block bg-blue-50 hover:bg-blue-100 p-4 rounded-xl transition card-hover">
+          <h3 class="font-semibold text-primary mb-1"><i class="fa-solid fa-book mr-2"></i>自然语言处理简介</h3>
+          <p class="text-sm text-gray-600">了解自然语言处理的基本概念和应用领域</p>
         </a>
-        <a href="https://geek.csdn.net/65856875d4226e0eb426f282.html" target="_blank" class="block p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
-          <h3 class="font-semibold text-secondary mb-2"><i class="fa-solid fa-graduation-cap mr-2"></i>自然语言处理入门指南</h3>
-          <p class="text-gray-600 text-sm">NLP初学者入门教程与学习路径</p>
+        <a href="https://geek.csdn.net/65856875d4226e0eb426f282.html" target="_blank" class="block bg-green-50 hover:bg-green-100 p-4 rounded-xl transition card-hover">
+          <h3 class="font-semibold text-secondary mb-1"><i class="fa-solid fa-graduation-cap mr-2"></i>自然语言处理入门指南</h3>
+          <p class="text-sm text-gray-600">NLP初学者入门教程与学习路径</p>
         </a>
-        <a href="https://cloud.tencent.com/developer/article/2325252" target="_blank" class="block p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors">
-          <h3 class="font-semibold text-accent mb-2"><i class="fa-solid fa-road mr-2"></i>自然语言处理学习路线</h3>
-          <p class="text-gray-600 text-sm">全面的NLP知识体系与学习路线图</p>
-        </a>
-        <a href="https://blog.csdn.net/m0_65121454/article/details/128178708" target="_blank" class="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
+        <a href="https://cloud.tencent.com/developer/article/2325252" target="_blank" class="block bg-yellow-50 hover:bg-yellow-100 p-4 rounded-xl transition card-hover">
+          <h3 class="font-semibold text-accent mb-1"><i class="fa-solid fa-road mr-2"></i>自然语言处理学习路线</h3>
+          <p class="text-sm text-gray-600">全面的NLP知识体系与学习路线图</p>
+        <a href="https://blog.csdn.net/m0_65121454/article/details/128178708" target="_blank" class="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors card-hover">
           <h3 class="font-semibold text-purple-600 mb-2"><i class="fa-solid fa-brain mr-2"></i>机器学习入门基础</h3>
           <p class="text-gray-600 text-sm">机器学习核心概念与算法原理</p>
         </a>
-        <a href="https://blog.csdn.net/illikang/article/details/82019945" target="_blank" class="block p-4 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors">
+        <a href="https://blog.csdn.net/illikang/article/details/82019945" target="_blank" class="block p-4 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors card-hover">
           <h3 class="font-semibold text-indigo-600 mb-2"><i class="fa-solid fa-network-wired mr-2"></i>理解神经网络</h3>
           <p class="text-gray-600 text-sm">神经网络工作原理与常见架构解析</p>
         </a>
       </div>
-    </div>
+    </section>
 
-    
-    <footer class="text-center text-gray-500 text-xs">
+    <footer class="text-center text-xs text-gray-500">
       <p>© 2025 计算机基础与NLP测验</p>
     </footer>
   </div>
 
   <script>
-    const questions = [
-      {
-        question: "计算机底层存储数据的基本单位是什么？",
-        options: [
-          "0和1", 
-          "字母和数字", 
-          "高电压和低电压", 
-          "开关和电路"
-        ],
-        answer: "A",
-        explanation: "计算机底层存储数据的基本单位是二进制位，即0和1。"
-      },
-      {
-        question: "以下哪种编码方式可以用于表示汉字？",
-        options: [
-          "UTF-8", 
-          "ASCII", 
-          "Morse Code", 
-          "EBCDIC"
-        ],
-        answer: "A",
-        explanation: "UTF-8是一种针对Unicode的可变长度字符编码，可以表示汉字。"
-      },
-      {
-        question: "计算机打开文本时出现乱码的原因通常是什么？",
-        options: [
-          "文件损坏", 
-          "解码方式与编码方式不匹配", 
-          "计算机内存不足", 
-          "文本内容过于复杂"
-        ],
-        answer: "B",
-        explanation: "乱码通常是因为解码时使用的字符编码与文本实际使用的编码不一致。"
-      },
-      {
-        question: "中文分词中，\"前向最大匹配算法\"的切分方向是：",
-        options: [
-          "从左到右", 
-          "从右到左", 
-          "随机选择", 
-          "双向扫描"
-        ],
-        answer: "A",
-        explanation: "前向最大匹配算法从左到右进行切分。"
-      },
-      {
-        question: "\"让孩子通过大量动物图片学习识别老虎\"的过程，在机器学习中对应哪个阶段？",
-        options: [
-          "训练", 
-          "验证", 
-          "测试", 
-          "部署"
-        ],
-        answer: "A",
-        explanation: "使用大量数据让模型学习的过程是训练阶段。"
-      },
-      {
-        question: "神经网络中，用于接收输入数据的是哪一层？",
-        options: [
-          "输入层", 
-          "隐藏层", 
-          "输出层", 
-          "卷积层"
-        ],
-        answer: "A",
-        explanation: "输入层负责接收输入数据。"
-      },
-      {
-        question: "以下哪项是自然语言处理（NLP）的核心任务之一？",
-        options: [
-          "图像分类", 
-          "语音识别", 
-          "中文分词", 
-          "视频剪辑"
-        ],
-        answer: "C",
-        explanation: "中文分词是自然语言处理的核心任务之一。"
-      },
-      {
-        question: "\"双向最大匹配算法\"结合了哪两种分词策略？",
-        options: [
-          "前向匹配和后向匹配", 
-          "随机匹配和规则匹配", 
-          "词表匹配和语义匹配", 
-          "静态匹配和动态匹配"
-        ],
-        answer: "A",
-        explanation: "双向最大匹配算法结合了前向最大匹配和后向最大匹配。"
-      },
-      {
-        question: "计算机通过二进制编码可以表示哪些类型的数据？",
-        options: [
-          "数字", 
-          "文字", 
-          "图像", 
-          "以上都是"
-        ],
-        answer: "D",
-        explanation: "计算机中所有类型的数据最终都以二进制形式表示。"
-      },
-      {
-        question: "自然语言处理中，神经网络的主要作用是什么？",
-        options: [
-          "存储大量数据", 
-          "自主学习和总结语言规律", 
-          "提高计算机运行速度", 
-          "生成随机文本"
-        ],
-        answer: "B",
-        explanation: "神经网络能够从数据中自主学习语言规律。"
-      }
-    ];
+const questions = [
+  {
+    question: "计算机底层存储数据的基本单位是什么？",
+    options: ["0和1", "字母和数字", "高电压和低电压", "开关和电路"],
+    answer: "A",
+    explanation: "计算机底层存储数据的基本单位是二进制位，即0和1。"
+  },
+  {
+    question: "以下哪种编码方式可以用于表示汉字？",
+    options: ["UTF-8", "ASCII", "Morse Code", "EBCDIC"],
+    answer: "A",
+    explanation: "UTF-8是一种针对Unicode的可变长度字符编码，可以表示汉字。"
+  },
+  {
+    question: "计算机打开文本时出现乱码的原因通常是什么？",
+    options: ["文件损坏", "解码方式与编码方式不匹配", "计算机内存不足", "文本内容过于复杂"],
+    answer: "B",
+    explanation: "乱码通常是因为解码时使用的字符编码与文本实际使用的编码不一致。"
+  },
+  {
+    question: "中文分词中，\"前向最大匹配算法\"的切分方向是：",
+    options: ["从左到右", "从右到左", "随机选择", "双向扫描"],
+    answer: "A",
+    explanation: "前向最大匹配算法从左到右进行切分。"
+  },
+  {
+    question: "\"让孩子通过大量动物图片学习识别老虎\"的过程，在机器学习中对应哪个阶段？",
+    options: ["训练", "验证", "测试", "部署"],
+    answer: "A",
+    explanation: "使用大量数据让模型学习的过程是训练阶段。"
+  },
+  {
+    question: "神经网络中，用于接收输入数据的是哪一层？",
+    options: ["输入层", "隐藏层", "输出层", "卷积层"],
+    answer: "A",
+    explanation: "输入层负责接收输入数据。"
+  },
+  {
+    question: "以下哪项是自然语言处理（NLP）的核心任务之一？",
+    options: ["图像分类", "语音识别", "中文分词", "视频剪辑"],
+    answer: "C",
+    explanation: "中文分词是自然语言处理的核心任务之一。"
+  },
+  {
+    question: "\"双向最大匹配算法\"结合了哪两种分词策略？",
+    options: ["前向匹配和后向匹配", "随机匹配和规则匹配", "词表匹配和语义匹配", "静态匹配和动态匹配"],
+    answer: "A",
+    explanation: "双向最大匹配算法结合了前向最大匹配和后向最大匹配。"
+  },
+  {
+    question: "计算机通过二进制编码可以表示哪些类型的数据？",
+    options: ["数字", "文字", "图像", "以上都是"],
+    answer: "D",
+    explanation: "计算机中所有类型的数据最终都以二进制形式表示。"
+  },
+  {
+    question: "自然语言处理中，神经网络的主要作用是什么？",
+    options: ["存储大量数据", "自主学习和总结语言规律", "提高计算机运行速度", "生成随机文本"],
+    answer: "B",
+    explanation: "神经网络能够从数据中自主学习语言规律。"
+  }
+];
 
-    let gameState = {
-      currentQuestion: 0,
-      answers: Array(questions.length).fill(null),
-      startTime: null,
-      timerInterval: null
-    };
+let gameState = {
+  currentQuestion: 0,
+  answers: Array(questions.length).fill(null),
+  startTime: null,
+  timerInterval: null
+};
 
-    function initGame() {
-      document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('total-questions').textContent = questions.length;
-        document.getElementById('options-container').addEventListener('click', (e) => {
-          const option = e.target.closest('.option');
-          if (option) selectAnswer(option);
-        });
+function initGame() {
+  document.getElementById('total-questions').textContent = questions.length;
+  document.getElementById('options-container').addEventListener('click', (e) => {
+    const option = e.target.closest('.option');
+    if (option) selectAnswer(option);
+  });
+  document.getElementById('prev-btn').addEventListener('click', goToPreviousQuestion);
+  document.getElementById('next-btn').addEventListener('click', goToNextQuestion);
+  document.getElementById('restart-btn').addEventListener('click', restartGame);
+  renderQuestion();
+  startTimer();
+}
 
-        document.getElementById('prev-btn').addEventListener('click', goToPreviousQuestion);
-        document.getElementById('next-btn').addEventListener('click', goToNextQuestion);
-        document.getElementById('restart-btn').addEventListener('click', restartGame);
+document.addEventListener('DOMContentLoaded', initGame);
 
-        renderQuestion();
-        startTimer();
-      });
-    }
+function renderQuestion() {
+  const q = questions[gameState.currentQuestion];
+  document.getElementById('question-text').textContent = q.question;
+  const container = document.getElementById('options-container');
+  container.innerHTML = '';
+  q.options.forEach((text, i) => {
+    const code = String.fromCharCode(65 + i);
+    const selected = gameState.answers[gameState.currentQuestion] === code;
+    const el = document.createElement('div');
+    el.className = `option flex items-center space-x-3 p-4 border rounded-xl hover:bg-blue-50 cursor-pointer transition-all ${selected ? 'border-primary bg-blue-50' : 'border-gray-200'}`;
+    el.setAttribute('data-answer', code);
+    el.innerHTML = `<span class="w-7 h-7 flex items-center justify-center rounded-full border ${selected ? 'bg-primary text-white border-primary' : 'bg-white text-gray-600 border-gray-300'}">${code}</span><span>${text}</span>`;
+    container.appendChild(el);
+  });
+  const progress = ((gameState.currentQuestion + 1) / questions.length) * 100;
+  document.getElementById('progress-bar').style.width = `${progress}%`;
+  document.getElementById('current-question').textContent = gameState.currentQuestion + 1;
+  updateNavigationButtons();
+}
 
-    function renderQuestion() {
-      const question = questions[gameState.currentQuestion];
-      const questionText = document.getElementById('question-text');
-      const optionsContainer = document.getElementById('options-container');
+function selectAnswer(option) {
+  const code = option.getAttribute('data-answer');
+  gameState.answers[gameState.currentQuestion] = code;
+  renderQuestion();
+}
 
-      questionText.textContent = question.question;
+function updateNavigationButtons() {
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const last = gameState.currentQuestion === questions.length - 1;
+  prevBtn.disabled = gameState.currentQuestion === 0;
+  prevBtn.classList.toggle('opacity-50', prevBtn.disabled);
+  prevBtn.classList.toggle('cursor-not-allowed', prevBtn.disabled);
+  nextBtn.innerHTML = last ? '<i class="fa-solid fa-check mr-2"></i>完成测验' : '下一题<i class="fa-solid fa-arrow-right ml-2"></i>';
+}
 
-      
-      optionsContainer.innerHTML = '';
-      question.options.forEach((option, index) => {
-        const isAnswered = gameState.answers[gameState.currentQuestion] === String.fromCharCode(65 + index);
-        const selectedClass = isAnswered ? 'bg-blue-50 border-primary' : '';
-        const circleClass = isAnswered ? 'bg-primary text-white border-primary' : '';
+function goToPreviousQuestion() {
+  if (gameState.currentQuestion > 0) {
+    gameState.currentQuestion--;
+    renderQuestion();
+  }
+}
 
-        const optionEl = document.createElement('div');
-        optionEl.className = `option p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors ${selectedClass}`;
-        optionEl.setAttribute('data-answer', String.fromCharCode(65 + index));
-        optionEl.setAttribute('role', 'button');
-        optionEl.setAttribute('aria-label', `选项${String.fromCharCode(65 + index)}`);
-        optionEl.innerHTML = `
-          <span class="inline-block w-6 h-6 rounded-full border border-gray-300 text-center mr-2 ${circleClass}">
-            ${String.fromCharCode(65 + index)}
-          </span>
-          <span>${option}</span>
-        `;
-        optionsContainer.appendChild(optionEl);
-      });
+function goToNextQuestion() {
+  if (gameState.currentQuestion < questions.length - 1) {
+    gameState.currentQuestion++;
+    renderQuestion();
+  } else {
+    submitQuiz();
+  }
+}
 
-    
-      const progress = ((gameState.currentQuestion + 1) / questions.length) * 100;
-      document.getElementById('progress-bar').style.width = `${progress}%`;
-      document.getElementById('current-question').textContent = gameState.currentQuestion + 1;
-      updateNavigationButtons();
+function submitQuiz() {
+  clearInterval(gameState.timerInterval);
+  const correct = gameState.answers.filter((ans, i) => ans === questions[i].answer).length;
+  document.getElementById('correct-count').textContent = correct;
+  document.getElementById('total-count').textContent = questions.length;
+  document.getElementById('score').textContent = correct * 10 + '分';
+  document.getElementById('final-time').textContent = document.getElementById('timer').textContent;
 
-    
-      document.getElementById('feedback').classList.add('hidden');
-    }
+  const feedback = document.getElementById('question-feedback');
+  feedback.innerHTML = '';
+  questions.forEach((q, i) => {
+    const user = gameState.answers[i] || '未作答';
+    const correct = user === q.answer;
+    const div = document.createElement('div');
+    div.className = `p-4 border-l-4 rounded-r-lg shadow-sm ${correct ? 'bg-green-100 border-green-500' : 'bg-red-100 border-red-500'}`;
+    div.innerHTML = `
+      <div class="flex items-start">
+        <i class="fa-solid ${correct ? 'fa-check-circle text-green-500' : 'fa-times-circle text-red-500'} text-xl mr-3"></i>
+        <div>
+          <strong>第 ${i + 1} 题：</strong> ${correct ? '回答正确！' : '回答错误'}<br />
+          <small>${correct ? q.explanation : `你的答案：${user}，正确答案：${q.answer}。${q.explanation}`}</small>
+        </div>
+      </div>`;
+    feedback.appendChild(div);
+  });
+  document.getElementById('quiz-container').classList.add('hidden');
+  document.getElementById('results-container').classList.remove('hidden');
+}
 
-    function selectAnswer(option) {
-      const answer = option.getAttribute('data-answer');
-      gameState.answers[gameState.currentQuestion] = answer;
+function restartGame() {
+  clearInterval(gameState.timerInterval);
+  gameState = {
+    currentQuestion: 0,
+    answers: Array(questions.length).fill(null),
+    startTime: new Date(),
+    timerInterval: null
+  };
+  document.getElementById('results-container').classList.add('hidden');
+  document.getElementById('quiz-container').classList.remove('hidden');
+  renderQuestion();
+  startTimer();
+}
 
-      document.querySelectorAll('.option').forEach(opt => {
-        opt.classList.remove('bg-blue-50', 'border-primary');
-        opt.querySelector('span:first-child').classList.remove('bg-primary', 'text-white', 'border-primary');
-      });
-
-      option.classList.add('bg-blue-50', 'border-primary');
-      option.querySelector('span:first-child').classList.add('bg-primary', 'text-white', 'border-primary');
-    }
-
-    function updateNavigationButtons() {
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-
-      if (gameState.currentQuestion === 0) {
-        prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
-        prevBtn.disabled = true;
-      } else {
-        prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-        prevBtn.disabled = false;
-      }
-
-      if (gameState.currentQuestion === questions.length - 1) {
-        nextBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i>完成测验';
-      } else {
-        nextBtn.innerHTML = '下一题<i class="fa-solid fa-arrow-right ml-2"></i>';
-      }
-    }
-
-    function goToPreviousQuestion() {
-      if (gameState.currentQuestion > 0) {
-        gameState.currentQuestion--;
-        renderQuestion();
-      }
-    }
-
-    function goToNextQuestion() {
-      if (gameState.currentQuestion < questions.length - 1) {
-        gameState.currentQuestion++;
-        renderQuestion();
-      } else {
-        submitQuiz();
-      }
-    }
-
-    function submitQuiz() {
-      clearInterval(gameState.timerInterval);
-      const correctAnswers = gameState.answers.filter((ans, i) => ans === questions[i].answer).length;
-      const totalTime = document.getElementById('timer').textContent;
-
-      document.getElementById('correct-count').textContent = correctAnswers;
-      document.getElementById('total-count').textContent = questions.length;
-      document.getElementById('score').textContent = `${correctAnswers * 10}分`;
-      document.getElementById('final-time').textContent = totalTime;
-
-      
-      const feedbackContainer = document.getElementById('question-feedback');
-      feedbackContainer.innerHTML = '';
-
-      questions.forEach((q, index) => {
-        const userAnswer = gameState.answers[index];
-        const isCorrect = userAnswer === q.answer;
-        const feedbackEl = document.createElement('div');
-        feedbackEl.className = 'p-4 border-l-4 rounded-r-lg shadow-sm bg-opacity-50';
-
-        if (isCorrect) {
-          feedbackEl.classList.add('bg-green-100', 'border-green-500');
-          feedbackEl.innerHTML = `
-            <div class="flex items-center">
-              <i class="fa-solid fa-check-circle text-green-500 text-xl mr-3"></i>
-              <div>
-                <strong>第 ${index + 1} 题：</strong> 回答正确！<br/>
-                <small>${q.explanation}</small>
-              </div>
-            </div>`;
-        } else {
-          feedbackEl.classList.add('bg-red-100', 'border-red-500');
-          feedbackEl.innerHTML = `
-            <div class="flex items-center">
-              <i class="fa-solid fa-times-circle text-red-500 text-xl mr-3"></i>
-              <div>
-                <strong>第 ${index + 1} 题：</strong> 回答错误<br/>
-                <small>你的答案：${userAnswer || '未作答'}，正确答案：${q.answer}. ${q.explanation}</small>
-              </div>
-            </div>`;
-        }
-
-        feedbackContainer.appendChild(feedbackEl);
-      });
-
-      document.getElementById('quiz-container').classList.add('hidden');
-      document.getElementById('results-container').classList.remove('hidden');
-    }
-
-    function restartGame() {
-      clearInterval(gameState.timerInterval);
-      gameState = {
-        currentQuestion: 0,
-        answers: Array(questions.length).fill(null),
-        startTime: new Date(),
-        timerInterval: null
-      };
-
-      document.getElementById('results-container').classList.add('hidden');
-      document.getElementById('quiz-container').classList.remove('hidden');
-
-      renderQuestion();
-      startTimer();
-    }
-
-    function startTimer() {
-      gameState.startTime = new Date();
-
-      gameState.timerInterval = setInterval(() => {
-        const now = new Date();
-        const elapsedSeconds = Math.floor((now - gameState.startTime) / 1000);
-        const minutes = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
-        const seconds = String(elapsedSeconds % 60).padStart(2, '0');
-        document.getElementById('timer').textContent = `${minutes}:${seconds}`;
-      }, 1000);
-    }
-    initGame();
-  </script>
+function startTimer() {
+  gameState.startTime = new Date();
+  gameState.timerInterval = setInterval(() => {
+    const now = new Date();
+    const seconds = Math.floor((now - gameState.startTime) / 1000);
+    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    document.getElementById('timer').textContent = `${m}:${s}`;
+  }, 1000);
+}
+</script>
 </body>
 </html>
