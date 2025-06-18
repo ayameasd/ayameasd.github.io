@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <title>自然语言处理知识点测验</title>
+  <title>计算机基础与自然语言处理测验</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="./font-awesome.min.css" rel="stylesheet" />
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script>
     tailwind.config = {
       theme: {
@@ -49,15 +50,15 @@
 </head>
 <body class="bg-gradient-to-br from-light to-blue-50 min-h-screen font-inter">
   <div class="container mx-auto px-4 py-6 max-w-3xl">
- 
+   
     <header class="text-center mb-6">
       <h1 class="text-[clamp(1.5rem,3vw,2.2rem)] font-bold text-primary mb-2">计算机基础与自然语言处理测验</h1>
       <p class="text-gray-600 text-sm">测试计算机基础与NLP知识掌握程度</p>
     </header>
 
- 
+  
     <main class="bg-white rounded-2xl shadow-xl p-5 mb-8">
-   
+  
       <div class="flex justify-between items-center mb-6">
         <div class="text-sm text-gray-500">
           <span id="current-question">1</span> / <span id="total-questions">10</span>
@@ -66,11 +67,11 @@
           <div id="progress-bar" class="bg-primary h-2 rounded-full" style="width: 10%"></div>
         </div>
         <div class="text-sm font-medium text-primary">
-          <i class="fa fa-clock-o mr-1"></i> <span id="timer">00:00</span>
+          <i class="fa-regular fa-clock mr-1"></i> <span id="timer">00:00</span>
         </div>
       </div>
 
-    
+      
       <div id="quiz-container" class="space-y-5">
         <div id="question-card" class="animate-fade-in">
           <h3 id="question-text" class="text-lg font-semibold text-dark mb-4">计算机底层存储数据的基本单位是什么？</h3>
@@ -79,21 +80,21 @@
 
         <div id="feedback" class="hidden"></div>
 
-      
+        
         <div class="flex justify-between mt-6">
           <button id="prev-btn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors opacity-50 cursor-not-allowed">
-            <i class="fa fa-arrow-left mr-2"></i>上一题
+            <i class="fa-solid fa-arrow-left mr-2"></i>上一题
           </button>
           <button id="next-btn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-            下一题<i class="fa fa-arrow-right ml-2"></i>
+            下一题<i class="fa-solid fa-arrow-right ml-2"></i>
           </button>
         </div>
       </div>
 
-   
+
       <div id="results-container" class="hidden text-center py-8 animate-fade-in">
         <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 text-secondary mb-4">
-          <i class="fa fa-check-circle text-3xl"></i>
+          <i class="fa-solid fa-check-circle text-3xl"></i>
         </div>
         <h2 class="text-2xl font-bold text-dark mb-2">测验完成！</h2>
         <p class="text-gray-600 mb-6">你的成绩已记录</p>
@@ -117,11 +118,11 @@
           </div>
         </div>
 
-       
+    
         <div id="question-feedback" class="mt-6 space-y-4"></div>
 
         <button id="restart-btn" class="px-6 py-3 bg-primary text-white rounded-lg shadow hover:bg-primary/90 transition-all">
-          <i class="fa fa-refresh mr-2"></i>再次测验
+          <i class="fa-solid fa-rotate-right mr-2"></i>再次测验
         </button>
       </div>
     </main>
@@ -131,29 +132,29 @@
       <h2 class="text-xl font-bold text-dark mb-4">知识拓展资源</h2>
       <div class="space-y-4">
         <a href="https://cloud.tencent.com/developer/article/1847253" target="_blank" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-          <h3 class="font-semibold text-primary mb-2">自然语言处理简介</h3>
+          <h3 class="font-semibold text-primary mb-2"><i class="fa-solid fa-book mr-2"></i>自然语言处理简介</h3>
           <p class="text-gray-600 text-sm">了解自然语言处理的基本概念和应用领域</p>
         </a>
         <a href="https://geek.csdn.net/65856875d4226e0eb426f282.html" target="_blank" class="block p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
-          <h3 class="font-semibold text-secondary mb-2">自然语言处理入门指南</h3>
+          <h3 class="font-semibold text-secondary mb-2"><i class="fa-solid fa-graduation-cap mr-2"></i>自然语言处理入门指南</h3>
           <p class="text-gray-600 text-sm">NLP初学者入门教程与学习路径</p>
         </a>
         <a href="https://cloud.tencent.com/developer/article/2325252" target="_blank" class="block p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors">
-          <h3 class="font-semibold text-accent mb-2">自然语言处理学习路线</h3>
+          <h3 class="font-semibold text-accent mb-2"><i class="fa-solid fa-road mr-2"></i>自然语言处理学习路线</h3>
           <p class="text-gray-600 text-sm">全面的NLP知识体系与学习路线图</p>
         </a>
         <a href="https://blog.csdn.net/m0_65121454/article/details/128178708" target="_blank" class="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
-          <h3 class="font-semibold text-purple-600 mb-2">机器学习入门基础</h3>
+          <h3 class="font-semibold text-purple-600 mb-2"><i class="fa-solid fa-brain mr-2"></i>机器学习入门基础</h3>
           <p class="text-gray-600 text-sm">机器学习核心概念与算法原理</p>
         </a>
         <a href="https://blog.csdn.net/illikang/article/details/82019945" target="_blank" class="block p-4 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors">
-          <h3 class="font-semibold text-indigo-600 mb-2">理解神经网络</h3>
+          <h3 class="font-semibold text-indigo-600 mb-2"><i class="fa-solid fa-network-wired mr-2"></i>理解神经网络</h3>
           <p class="text-gray-600 text-sm">神经网络工作原理与常见架构解析</p>
         </a>
       </div>
     </div>
 
- 
+    
     <footer class="text-center text-gray-500 text-xs">
       <p>© 2025 计算机基础与NLP测验</p>
     </footer>
@@ -304,7 +305,7 @@
 
       questionText.textContent = question.question;
 
-   
+      
       optionsContainer.innerHTML = '';
       question.options.forEach((option, index) => {
         const isAnswered = gameState.answers[gameState.currentQuestion] === String.fromCharCode(65 + index);
@@ -325,13 +326,13 @@
         optionsContainer.appendChild(optionEl);
       });
 
-  
+    
       const progress = ((gameState.currentQuestion + 1) / questions.length) * 100;
       document.getElementById('progress-bar').style.width = `${progress}%`;
       document.getElementById('current-question').textContent = gameState.currentQuestion + 1;
       updateNavigationButtons();
 
-     
+    
       document.getElementById('feedback').classList.add('hidden');
     }
 
@@ -361,9 +362,9 @@
       }
 
       if (gameState.currentQuestion === questions.length - 1) {
-        nextBtn.innerHTML = '<i class="fa fa-check mr-2"></i>完成测验';
+        nextBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i>完成测验';
       } else {
-        nextBtn.innerHTML = '下一题<i class="fa fa-arrow-right ml-2"></i>';
+        nextBtn.innerHTML = '下一题<i class="fa-solid fa-arrow-right ml-2"></i>';
       }
     }
 
@@ -407,7 +408,7 @@
           feedbackEl.classList.add('bg-green-100', 'border-green-500');
           feedbackEl.innerHTML = `
             <div class="flex items-center">
-              <i class="fa fa-check-circle text-green-500 text-xl mr-3"></i>
+              <i class="fa-solid fa-check-circle text-green-500 text-xl mr-3"></i>
               <div>
                 <strong>第 ${index + 1} 题：</strong> 回答正确！<br/>
                 <small>${q.explanation}</small>
@@ -417,7 +418,7 @@
           feedbackEl.classList.add('bg-red-100', 'border-red-500');
           feedbackEl.innerHTML = `
             <div class="flex items-center">
-              <i class="fa fa-times-circle text-red-500 text-xl mr-3"></i>
+              <i class="fa-solid fa-times-circle text-red-500 text-xl mr-3"></i>
               <div>
                 <strong>第 ${index + 1} 题：</strong> 回答错误<br/>
                 <small>你的答案：${userAnswer || '未作答'}，正确答案：${q.answer}. ${q.explanation}</small>
